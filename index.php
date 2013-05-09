@@ -36,6 +36,9 @@ class wechatCallbackapiTest
         case "text" :
           $result = $this->receivedText($postObj);
           break;
+        case "location" :
+          $result = $this->receivedGeo($postObj);
+          break;
       }
       echo $result;
     }else {
@@ -71,6 +74,29 @@ class wechatCallbackapiTest
 
   private function receivedGeo($postObj)
   {
+    $fromUsername = $postObj->FromUserName;
+    $toUsername = $postObj->ToUserName;
+    $keyword = trim($postObj->Content);
+    $location_X = $postObj->Location_X;
+    $location_Y = $postObj->Location_Y;
+    $time = time();
+    $textTpl = "<xml>
+      <ToUserName><![CDATA[%s]]></ToUserName>
+      <FromUserName><![CDATA[%s]]></FromUserName>
+      <CreateTime>%s</CreateTime>
+      <MsgType><![CDATA[%s]]></MsgType>
+      <Content><![CDATA[%s]]></Content>
+      <FuncFlag>0</FuncFlag>
+      </xml>";             
+    if(!empty( $keyword ))
+    {
+      $msgType = "text";
+      $contentStr = "纬度".$location_X.",经度".$location_Y;
+      $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+      return $resultStr;
+    }else{
+      return "Input something...";
+    }
   }
 
   private function checkSignature()
