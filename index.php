@@ -99,7 +99,7 @@ class wechatCallbackapiTest
     {
       $msgType = "news";
       $picUrl = "http://st.map.soso.com/api?size=400*300&center=".$location_Y.",".$location_X."&zoom=16&markers=".$location_Y.",".$location_X;
-      $url = "http://www.soso.com";
+      $url = "http://st.map.soso.com/api?size=600*400&center=".$location_Y.",".$location_X."&zoom=16&markers=".$location_Y.",".$location_X;
       $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $picUrl, $url);
       return $resultStr;
     }else{
