@@ -32,7 +32,7 @@ class wechatCallbackapiTest
 
       $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
       $msgType = $postObj->MsgType;
-      switch ($MsgType) {
+      switch ($msgType) {
         case "text" :
           $result = $this->receivedText($postObj);
           break;
