@@ -84,14 +84,23 @@ class wechatCallbackapiTest
       <FromUserName><![CDATA[%s]]></FromUserName>
       <CreateTime>%s</CreateTime>
       <MsgType><![CDATA[%s]]></MsgType>
-      <Content><![CDATA[%s]]></Content>
-      <FuncFlag>0</FuncFlag>
+      <ArticleCount>1</ArticleCount>
+      <Articles>
+      <item>
+      <Title><![CDATA[Geo]]></Title> 
+      <Description><![CDATA[Your Geo Info]]></Description>
+      <PicUrl><![CDATA[%s]]></PicUrl>
+      <Url><![CDATA[%s]]></Url>
+      </item>
+      </Articles>
+      <FuncFlag>1</FuncFlag>
       </xml>";             
     if($location_X && $location_Y)
     {
-      $msgType = "text";
-      $contentStr = "纬度".$location_X.",经度".$location_Y;
-      $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+      $msgType = "news";
+      $picUrl = "http://st.map.soso.com/api?size=400*300&center=".$location_Y.",".$location_X."&zoom=16&markers=".$location_Y.",".$location_X;
+      $url = "http://www.soso.com";
+      $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $picUrl, $url);
       return $resultStr;
     }else{
       return "Input something...";
