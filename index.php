@@ -87,7 +87,7 @@ class wechatCallbackapiTest
       <Content><![CDATA[%s]]></Content>
       <FuncFlag>0</FuncFlag>
       </xml>";             
-    if(!empty( $location_X && $location_Y ))
+    if($location_X && $location_Y)
     {
       $msgType = "text";
       $contentStr = "纬度".$location_X.",经度".$location_Y;
