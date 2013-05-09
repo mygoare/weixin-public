@@ -76,7 +76,6 @@ class wechatCallbackapiTest
   {
     $fromUsername = $postObj->FromUserName;
     $toUsername = $postObj->ToUserName;
-    $keyword = trim($postObj->Content);
     $location_X = $postObj->Location_X;
     $location_Y = $postObj->Location_Y;
     $time = time();
@@ -88,7 +87,7 @@ class wechatCallbackapiTest
       <Content><![CDATA[%s]]></Content>
       <FuncFlag>0</FuncFlag>
       </xml>";             
-    if(!empty( $keyword ))
+    if(!empty( $location_X && $location_Y ))
     {
       $msgType = "text";
       $contentStr = "纬度".$location_X.",经度".$location_Y;
