@@ -34,9 +34,10 @@ class wechatCallbackapiTest
       $msgType = $postObj->MsgType;
       switch ($MsgType) {
         case "text" :
-          $this->receivedText($postObj);
+          $result = $this->receivedText($postObj);
           break;
       }
+      echo $result;
     }else {
       echo "";
       exit;
@@ -62,9 +63,9 @@ class wechatCallbackapiTest
       $msgType = "text";
       $contentStr = "Welcome to wechat world!";
       $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-      echo $resultStr;
+      return $resultStr;
     }else{
-      echo "Input something...";
+      return "Input something...";
     }
   }
 
