@@ -4,7 +4,7 @@
  */
 
 //define your token
-define("TOKEN", "mygoare");
+define("TOKEN", "overseasstudentliving");
 $wechatObj = new wechatCallbackapiTest();
 $wechatObj->valid();
 
@@ -39,11 +39,37 @@ class wechatCallbackapiTest
         case "location" :
           $result = $this->receivedGeo($postObj);
           break;
+        case "event" :
+          $result = $this->receivedEvent($postObj);
+          break;
       }
       echo $result;
     }else {
       echo "";
       exit;
+    }
+  }
+
+  private function receivedEvent($postObj)
+  {
+    $fromUsername = $postObj->FromUserName;
+    $toUsername = $postObj->ToUserName;
+    $time = time();
+    $eventType = $postObj->Event;
+    $textTpl = "<xml>
+      <ToUserName><![CDATA[%s]]></ToUserName>
+      <FromUserName><![CDATA[%s]]></FromUserName>
+      <CreateTime>%s</CreateTime>
+      <MsgType><![CDATA[%s]]></MsgType>
+      <Content><![CDATA[%s]]></Content>
+      <FuncFlag>0</FuncFlag>
+      </xml>";
+    if($eventType == "subscribe")
+    {
+      $msgType = "text";
+      $contentStr = "你好，欢迎来到留学生公寓网官方微信";
+      $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+      return $resultStr;
     }
   }
 
@@ -60,11 +86,11 @@ class wechatCallbackapiTest
       <MsgType><![CDATA[%s]]></MsgType>
       <Content><![CDATA[%s]]></Content>
       <FuncFlag>0</FuncFlag>
-      </xml>";             
+      </xml>";
     if(!empty( $keyword ))
     {
       $msgType = "text";
-      $contentStr = "Welcome to wechat world!";
+      $contentStr = "Welcome to Overseasstudentliving.";
       $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
       return $resultStr;
     }else{
@@ -87,14 +113,14 @@ class wechatCallbackapiTest
       <ArticleCount>1</ArticleCount>
       <Articles>
       <item>
-      <Title><![CDATA[Geo]]></Title> 
-      <Description><![CDATA[Your Geo Info]]></Description>
+      <Title><![CDATA[根据您的地理坐标生成的图片]]></Title>
+      <Description><![CDATA[根据您的地理坐标生成的图片]]></Description>
       <PicUrl><![CDATA[%s]]></PicUrl>
       <Url><![CDATA[%s]]></Url>
       </item>
       </Articles>
       <FuncFlag>1</FuncFlag>
-      </xml>";             
+      </xml>";
     if($location_X && $location_Y)
     {
       $msgType = "news";
@@ -111,7 +137,7 @@ class wechatCallbackapiTest
   {
     $signature = $_GET["signature"];
     $timestamp = $_GET["timestamp"];
-    $nonce = $_GET["nonce"];  
+    $nonce = $_GET["nonce"];
 
     $token = TOKEN;
     $tmpArr = array($token, $timestamp, $nonce);
